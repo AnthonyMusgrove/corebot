@@ -17,8 +17,23 @@ namespace corebot
 
         public String ?Gecos { get; set; }
 
-        public Dictionary<string, int>? ServerList { get; set; } = new Dictionary<string, int>();
+        public List<IRCServer>? ServerList { get; set; } = new List<IRCServer>();
 
+    }
+
+    public class IRCServer
+    {
+        public String ?hostname { get; set; }
+        public int ?port { get; set; }
+
+        public String ?password { get; set; }
+
+        public IRCServer(String hostname, int port, String password = null)
+        {
+            this.hostname = hostname;
+            this.port = port;
+            this.password = password;
+        }
     }
 
     public class BotConfig
@@ -38,7 +53,7 @@ namespace corebot
                 loadedConfig.UserID = "corebot";
                 loadedConfig.Gecos = "I am corebot!";
 
-                loadedConfig?.ServerList?.Add("irc.libera.chat", 6697);
+                loadedConfig?.ServerList?.Add(new IRCServer("irc.libera.chat", 6697));
 
                 this.Save();
             }
@@ -61,7 +76,7 @@ namespace corebot
             }
             catch (Exception ex)
             {
-
+                throw new Exception("Error loading bot configuration.  Check corebot.conf for errors.");
             }
 
         }

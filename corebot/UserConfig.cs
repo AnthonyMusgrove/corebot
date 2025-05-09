@@ -66,7 +66,7 @@ namespace corebot
             }
             catch(Exception ex)
             {
-
+                throw new Exception("Error loading users configuration.  Check users.conf for errors.");
             }
         }
 
